@@ -1,0 +1,152 @@
+[
+    {
+        "home": "Criciúma",
+        "away": "Juventude",
+        "homeScore": {
+            "period1": 1,
+            "period2": 0,
+            "normaltime": 1
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 1,
+            "normaltime": 1
+        },
+        "id": 1980
+    },
+    {
+        "home": "Internacional",
+        "away": "Bahia",
+        "homeScore": {
+            "period1": 0,
+            "period2": 2,
+            "normaltime": 2
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 1,
+            "normaltime": 1
+        },
+        "id": 1955
+    },
+    {
+        "home": "Fluminense",
+        "away": "Red Bull Bragantino",
+        "homeScore": {
+            "period1": 1,
+            "period2": 1,
+            "normaltime": 2
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 2,
+            "normaltime": 2
+        },
+        "id": 1999
+    },
+    {
+        "home": "São Paulo",
+        "away": "Fortaleza",
+        "homeScore": {
+            "period1": 0,
+            "period2": 1,
+            "normaltime": 1
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 2,
+            "normaltime": 2
+        },
+        "id": 2020
+    },
+    {
+        "home": "Athletico",
+        "away": "Cuiabá",
+        "homeScore": {
+            "period1": 3,
+            "period2": 1,
+            "normaltime": 4
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 0,
+            "normaltime": 0
+        },
+        "id": 49202
+    },
+    {
+        "home": "Atlético Goianiense",
+        "away": "Flamengo",
+        "homeScore": {
+            "period1": 0,
+            "period2": 1,
+            "normaltime": 1
+        },
+        "awayScore": {
+            "period1": 1,
+            "period2": 1,
+            "normaltime": 2
+        },
+        "id": 5981
+    },
+    {
+        "home": "Corinthians",
+        "away": "Atlético Mineiro",
+        "homeScore": {
+            "period1": 0,
+            "period2": 0,
+            "normaltime": 0
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 0,
+            "normaltime": 0
+        },
+        "id": 1977
+    },
+    {
+        "home": "Vasco",
+        "away": "Grêmio",
+        "homeScore": {
+            "period1": 2,
+            "period2": 0,
+            "normaltime": 2
+        },
+        "awayScore": {
+            "period1": 0,
+            "period2": 1,
+            "normaltime": 1
+        },
+        "id": 5926
+    },
+    {
+        "home": "Cruzeiro",
+        "away": "Botafogo",
+        "homeScore": {
+            "period1": 1,
+            "period2": 2,
+            "normaltime": 3
+        },
+        "awayScore": {
+            "period1": 1,
+            "period2": 1,
+            "normaltime": 2
+        },
+        "id": 1958
+    },
+    {
+        "home": "Vitória",
+        "away": "Palmeiras",
+        "homeScore": {
+            "period1": 0,
+            "period2": 0,
+            "normaltime": 0
+        },
+        "awayScore": {
+            "period1": 1,
+            "period2": 0,
+            "normaltime": 1
+        },
+        "id": 1963
+    }
+]
