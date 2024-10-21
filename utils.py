@@ -9,13 +9,34 @@ from typing import Literal, Any
 class Urls:
     """Urls da api do SofaScore"""
 
-    CATEGORIES = "https://www.sofascore.com/api/v1/sport/football/categories"
-    CATEGORY = "https://www.sofascore.com/api/v1/category/{}/unique-tournaments"
-    # MAIN_TOURNAMENTS = "https://www.sofascore.com/api/v1/config/top-unique-tournaments/BR/football"
-    TOURNAMENT = "https://api.sofascore.com/api/v1/unique-tournament/{}/seasons"
-    SEASON = "https://www.sofascore.com/api/v1/unique-tournament/{}/season/{}/events/round/{}"
-    STATISTICS = "https://www.sofascore.com/api/v1/event/{}/statistics"
-    EVENT = "https://www.sofascore.com/api/v1/event/{}"
+    @staticmethod
+    def categories():
+        return "https://www.sofascore.com/api/v1/sport/football/categories"
+    
+    @staticmethod
+    def category(id): 
+        return f"https://www.sofascore.com/api/v1/category/{id}/unique-tournaments"
+    
+    @staticmethod
+    def tournament(id):
+        return f"https://api.sofascore.com/api/v1/unique-tournament/{id}/seasons"
+    
+    @staticmethod
+    def season(tournament_id, season_id, round):
+        return f"https://www.sofascore.com/api/v1/unique-tournament/{tournament_id}/season/{season_id}/events/round/{round}"
+    
+    @staticmethod
+    def statistics(event_id):
+        return f"https://www.sofascore.com/api/v1/event/{event_id}/statistics"
+    
+    @staticmethod
+    def event(id):
+        return f"https://www.sofascore.com/api/v1/event/{id}"
+    
+    @staticmethod
+    def main_tournaments(): 
+        return "https://www.sofascore.com/api/v1/config/top-unique-tournaments/BR/football"
+    
 
 
 File = Literal["categories", "category", "tournament", "season", "statistics"]
@@ -75,15 +96,16 @@ def save_csv(data, file: File, *args, update: bool = True, makedirs: bool = True
         csv.writer(f).writerows(data)
 
 
-def get_data(url):
-    return requests.get(url).json()
+class Base:
 
-def get_name(data, id: int):
-
-    if data is None:
-        raise FileNotFoundError('É necessário carregar os dados primeiro.')
-
-    for c in data:
-        if data[c] == id:
-            return c
-    raise ValueError(f'Erro: id={id} não encontrado.')
+    def get_name(self, id: int) -> str:
+        for c in self.data:
+            if self.data[c] == id:
+                return c
+        raise ValueError(f'id {id} não encontrado')
+            
+    def get_id(self, name: str) -> int:
+        for c in self.data:
+            if c == name:
+                return self.data[c]
+        raise ValueError(f'Nome {name} não encontrado')
