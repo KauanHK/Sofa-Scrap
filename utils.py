@@ -96,6 +96,7 @@ def save_csv(data, file: File, *args, update: bool = True, makedirs: bool = True
         csv.writer(f).writerows(data)
 
 
+
 class Base:
 
     def get_name(self, id: int) -> str:
@@ -109,3 +110,14 @@ class Base:
             if c == name:
                 return self.data[c]
         raise ValueError(f'Nome {name} não encontrado')
+    
+    def json(self):
+        if self.is_saved():
+            return load_json(*self.locator)
+        data = self._load()
+        save_json(data, *self.locator)
+        return data
+    
+    def is_saved(self) -> bool:
+        file_path = get_file_path(*self.locator)
+        return os.path.exists(file_path)
