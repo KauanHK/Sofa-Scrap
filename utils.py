@@ -112,6 +112,7 @@ class Base:
         raise ValueError(f'Nome {name} não encontrado')
     
     def json(self):
+        print(f"Carregando {self.__class__.__name__}")
         if self.is_saved():
             return load_json(*self.locator)
         data = self._load()
@@ -121,3 +122,6 @@ class Base:
     def is_saved(self) -> bool:
         file_path = get_file_path(*self.locator)
         return os.path.exists(file_path)
+    
+    def get_all_names(self) -> list[str]:
+        return list(self.data)
