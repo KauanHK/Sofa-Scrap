@@ -2,7 +2,7 @@ import requests
 import json
 import csv
 import os
-from typing import Literal, Any
+from typing import Literal, Union, Any
 
 
 
@@ -37,6 +37,17 @@ class Urls:
     def main_tournaments(): 
         return "https://www.sofascore.com/api/v1/config/top-unique-tournaments/BR/football"
     
+class FileNames:
+
+    @staticmethod
+    def season(category_name: str, name: str) -> str:
+        name = name.replace('/', '-')
+        return f"./database/{category_name}/{name}.json"
+
+    @staticmethod
+    def statistics(category_name: str, name: str) -> str:
+        name = name.replace('/', '-')
+        return f"./database/{category_name}/statistics/{name}.json"
 
 
 File = Literal["categories", "category", "tournament", "season", "statistics"]
@@ -53,13 +64,8 @@ def get_file_path(file: File, *args: str, makedirs: bool = False):
     return file_path
 
 
-def load_json(file: File, *args) -> dict:
-    """Carrega um json. Se o arquivo não existir, retorna None"""
-
-    file_path = get_file_path(file, *args)
-    if not os.path.exists(file_path):
-        return None
-    
+def load_json(file_path: str) -> dict:
+    """Carrega um json. Se o arquivo não existir, FileNotFoundError"""
     with open(file_path, 'r') as f:
         return json.load(f)
 
@@ -71,11 +77,17 @@ def load_csv(file: File, *args):
     with open(file_path, 'r') as f:
         return list(csv.reader(f))[1:]
 
-def save_json(data, file: File, *args, update: bool = True, makedirs: bool = True):
+def save_json(data: Union[dict, list], file_path: str, update: bool = True, makedirs: bool = True):
 
-    file_path = get_file_path(file, *args, makedirs=makedirs)
+    if makedirs:
+        os.makedirs(os.path.split(file_path)[0], exist_ok=True)
+
     if update and os.path.exists(file_path):
-        data.update(load_json(file, *args))
+        current_data = load_json(file_path)
+        if isinstance(data, dict):
+            data.update(current_data)
+        else:
+            data.extend(current_data)
 
     with open(file_path, 'w') as f:
         try:
@@ -95,33 +107,3 @@ def save_csv(data, file: File, *args, update: bool = True, makedirs: bool = True
     with open(file_path, 'w') as f:
         csv.writer(f).writerows(data)
 
-
-
-class Base:
-
-    def get_name(self, id: int) -> str:
-        for c in self.data:
-            if self.data[c] == id:
-                return c
-        raise ValueError(f'id {id} não encontrado')
-            
-    def get_id(self, name: str) -> int:
-        for c in self.data:
-            if c == name:
-                return self.data[c]
-        raise ValueError(f'Nome {name} não encontrado')
-    
-    def json(self):
-        print(f"Carregando {self.__class__.__name__}")
-        if self.is_saved():
-            return load_json(*self.locator)
-        data = self._load()
-        save_json(data, *self.locator)
-        return data
-    
-    def is_saved(self) -> bool:
-        file_path = get_file_path(*self.locator)
-        return os.path.exists(file_path)
-    
-    def get_all_names(self) -> list[str]:
-        return list(self.data)

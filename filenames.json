@@ -1,7 +1,0 @@
-{
-    "categories": "./database/categories.json",
-    "category": "./database/categories/{}.json",
-    "tournament": "./database/{}/{}.json",
-    "season": "./database/{}/statistics/{}.json",
-    "statistics": "./database/statistics/{}.csv"
-}
