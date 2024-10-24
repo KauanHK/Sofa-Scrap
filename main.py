@@ -3,6 +3,7 @@
 def main():
 
     from database import MainTournaments
+    from stats import Statistics
     main_tournaments = MainTournaments()
     tournament = main_tournaments.input()
     if tournament == 'outro':
@@ -13,7 +14,10 @@ def main():
         tournament = cat.input()
         
     season = tournament.input()
-    season.load()
+
+    stats = Statistics(season)
+    n = stats.input()
+    stats.save(n)
 
 if __name__ == '__main__':
     main()

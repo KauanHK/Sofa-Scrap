@@ -36,6 +36,10 @@ class Urls:
     @staticmethod
     def main_tournaments(): 
         return "https://www.sofascore.com/api/v1/config/top-unique-tournaments/BR/football"
+
+    @staticmethod
+    def rounds(tournament_id: int, season_id: int):
+        return f"https://www.sofascore.com/api/v1/unique-tournament/{tournament_id}/season/{season_id}/team-of-the-week/rounds"
     
 class FileNames:
 
@@ -77,7 +81,7 @@ def load_csv(file: File, *args):
     with open(file_path, 'r') as f:
         return list(csv.reader(f))[1:]
 
-def save_json(data: Union[dict, list], file_path: str, update: bool = True, makedirs: bool = True):
+def save_json(data: Union[dict, list], file_path: str, update: bool = False, makedirs: bool = True):
 
     if makedirs:
         os.makedirs(os.path.split(file_path)[0], exist_ok=True)

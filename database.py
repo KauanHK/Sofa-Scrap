@@ -36,23 +36,7 @@ class Base:
 
         if current_data is None:
             data = self._load()
-        elif data_object == "Season":
-            matches_per_round = 0
-            for k in current_data:
-                if len(current_data[k]) > matches_per_round:
-                    matches_per_round = len(current_data[k])
-
-            rounds = []
-            for k in current_data:
-                if len(current_data[k]) < matches_per_round:
-                    n = int(k[6:])
-                    rounds.append(n)
-
-            if not len(rounds):
-                rounds = range(len(current_data), 1000)
-            data = self._load(rounds)
-
-        if current_data is not None:
+        else:
             data.update(current_data)
         
         if hasattr(self, 'file_path') and self.file_path is not None:
@@ -152,8 +136,6 @@ class MainTournaments(Base):
                     return Tournament(id, tournament_name, category)
             except ValueError:
                 break
-
-        
 
 
 class Categories(Base):
@@ -263,57 +245,9 @@ class Season(Base):
         self.category = category
         self.tournament = tournament
 
-    def input(self) -> None:
-        pass
-
     def _get_file_name(self, category: Category, name: str) -> str:
         return FileNames.season(category.name, name)
 
-    def load_round(self, round: int):
-        url = Urls.season(self.tournament.id, self.id, round)
-        data = requests.get(url).json()
-        data = data["events"]
-
-        filter_data = {}
-        for match in data:
-            
-            home_team = match["homeTeam"]["name"]
-            away_team = match["awayTeam"]["name"]
-            match_name = f'{home_team} x {away_team}'
-
-            status = match["status"]["type"]
-            if status == 'notstarted':
-                if not len(filter_data):
-                    return None
-                continue
-            elif status != 'finished':
-                continue
-            
-            
-            home_data = {
-                "name": home_team,
-                "id": match["homeTeam"]["id"],
-                "period1": match["homeScore"]["period1"],
-                "period2": match["homeScore"]["period2"],
-                "normaltime": match["homeScore"]["normaltime"]
-            }
-
-            away_data = {
-                "name": away_team,
-                "id": match["awayTeam"]["id"],
-                "period1": match["awayScore"]["period1"],
-                "period2": match["awayScore"]["period2"],
-                "normaltime": match["awayScore"]["normaltime"]
-            }
-
-            filter_data[match_name] = {
-                "home": home_data,
-                "away": away_data,
-                "status": status,
-                "id": match["id"]
-            }
-
-        return filter_data
     
     def get_rounds(self, save: bool = True) -> list[list["Match"]]:
         self._save = save
@@ -339,7 +273,7 @@ class Season(Base):
             round = self.load_round(n)
             if round is None:
                 break
-            data[f'rodada{n}'] = round
+            data[n] = round
             
             print(f'Rodada {n}   ', end='\r')
 
