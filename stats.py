@@ -109,7 +109,7 @@ class Statistics:
         current_round = requests.get(url).json()
         current_round = len(current_round["rounds"])
 
-        for 
+        # for 
         data = self.load(n)
         filename = f'{self.home} x {self.away}.json'
         filename = './a.json'

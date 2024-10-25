@@ -2,13 +2,12 @@
 
 def main():
 
-    from database import MainTournaments
+    from database import MainTournaments, Categories
     from stats import Statistics
     main_tournaments = MainTournaments()
     tournament = main_tournaments.input()
     if tournament == 'outro':
-
-        from database import Categories
+        print('outro otnrio')
         cats = Categories()
         cat = cats.input()
         tournament = cat.input()

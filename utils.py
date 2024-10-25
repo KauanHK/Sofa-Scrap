@@ -40,7 +40,7 @@ class Urls:
     @staticmethod
     def rounds(tournament_id: int, season_id: int):
         return f"https://www.sofascore.com/api/v1/unique-tournament/{tournament_id}/season/{season_id}/team-of-the-week/rounds"
-    
+
 class FileNames:
 
     @staticmethod
@@ -56,17 +56,15 @@ class FileNames:
 
 File = Literal["categories", "category", "tournament", "season", "statistics"]
 
-def get_file_path(file: File, *args: str, makedirs: bool = False):
+def get_file_path(data: str, category_name: str | None = None, name: str | None = None):
     """Retorna o caminho do arquivo"""
-
-    with open("filenames.json", 'r') as f:
-        file_path = json.load(f)[file]
-    if args:
-        file_path = file_path.format(*args)
-    if makedirs:
-        os.makedirs(os.path.split(file_path)[0], exist_ok=True)
-    return file_path
-
+    
+    if data == 'Season':
+        return os.path.join('database', category_name, f'{name}.json')
+    elif data == 'Statistics':
+        return os.path.join('database', category_name, 'statistics', f'{name}.json')
+    
+    return os.path.join('database', f'{data}.json')
 
 def load_json(file_path: str) -> dict:
     """Carrega um json. Se o arquivo não existir, FileNotFoundError"""
